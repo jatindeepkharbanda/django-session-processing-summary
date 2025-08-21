@@ -136,12 +136,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange })
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Modified Date
+                Visit Timestamp
               </label>
               <DateRangePicker
-                label="Modified Date"
-                value={filters.modifiedDate}
-                onChange={(range) => handleFilterUpdate('modifiedDate', range)}
+                label="Visit Timestamp"
+                value={filters.visitTimestamp}
+                onChange={(range) => handleFilterUpdate('visitTimestamp', range)}
               />
             </div>
             <div className="space-y-2">
@@ -156,12 +156,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange })
             </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Visit Timestamp
+                Modified Date
               </label>
               <DateRangePicker
-                label="Visit Timestamp"
-                value={filters.visitTimestamp}
-                onChange={(range) => handleFilterUpdate('visitTimestamp', range)}
+                label="Modified Date"
+                value={filters.modifiedDate}
+                onChange={(range) => handleFilterUpdate('modifiedDate', range)}
               />
             </div>
           </div>
