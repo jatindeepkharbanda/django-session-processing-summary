@@ -30,11 +30,17 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ label, value, onChang
   const [isOpen, setIsOpen] = React.useState(false);
 
   const handleSelect = (range: DateRange | undefined) => {
-    onChange(range || {});
+    const newRange = range || { from: undefined, to: undefined };
+    onChange(newRange);
+    
+    // Auto-close when both dates are selected
+    if (newRange.from && newRange.to) {
+      setIsOpen(false);
+    }
   };
 
   const clearFilter = () => {
-    onChange({});
+    onChange({ from: undefined, to: undefined });
     setIsOpen(false);
   };
 
@@ -47,15 +53,15 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ label, value, onChang
           variant="outline"
           size="sm"
           className={cn(
-            'w-full justify-start text-left font-normal h-9 px-3 text-xs',
+            'w-full justify-start text-left font-normal h-8 px-2 text-xs',
             !hasValue && 'text-muted-foreground'
           )}
         >
-          <CalendarIcon className="mr-2 h-3 w-3" />
+          <CalendarIcon className="mr-1.5 h-3 w-3" />
           {hasValue ? (
             <>
-              {value.from ? format(value.from, 'MMM dd') : 'Start'} - {' '}
-              {value.to ? format(value.to, 'MMM dd, yyyy') : 'End'}
+              {value.from ? format(value.from, 'dd/MM') : 'Start'} - {' '}
+              {value.to ? format(value.to, 'dd/MM/yy') : 'End'}
             </>
           ) : (
             'Select range'
@@ -168,8 +174,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange })
             )}
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div className="space-y-2">
+          <div className="grid grid-cols-3 gap-3">
+            <div className="space-y-1.5">
               <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 Visit Timestamp
               </label>
@@ -179,7 +185,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange })
                 onChange={(range) => handleFilterUpdate('visitTimestamp', range)}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 Created On
               </label>
@@ -189,7 +195,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange })
                 onChange={(range) => handleFilterUpdate('createdOn', range)}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 Modified Date
               </label>

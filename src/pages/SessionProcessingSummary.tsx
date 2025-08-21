@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { KPICard } from '@/components/KPICard';
-import { FilterBar } from '@/components/FilterBar';
-import QuickDatePresets from '@/components/QuickDatePresets';
+import CombinedFilterBar from '@/components/CombinedFilterBar';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbPage } from '@/components/ui/breadcrumb';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -115,11 +114,8 @@ const SessionProcessingSummary = () => {
       </header>
 
       <div className="mx-auto max-w-7xl px-8 py-8 space-y-6">
-        {/* Filters */}
-        <FilterBar filters={filters} onFilterChange={handleFilterChange} />
-        
-        {/* Quick Date Presets */}
-        <QuickDatePresets filters={filters} onFilterChange={handleFilterChange} />
+        {/* Combined Filters */}
+        <CombinedFilterBar filters={filters} onFilterChange={handleFilterChange} />
 
         {/* KPI Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
