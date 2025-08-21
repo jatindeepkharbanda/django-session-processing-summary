@@ -98,7 +98,7 @@ const SessionProcessingSummary = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-sm flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-400 rounded-sm flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
                   </svg>
