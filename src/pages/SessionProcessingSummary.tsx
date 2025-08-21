@@ -218,6 +218,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Fully Processed"
             value={metrics.sessionsFullyProcessed}
             isLoading={loading || isRefreshing}
+            variant={metrics.sessionsFullyProcessed > 0 ? "success" : "default"}
             definition="PhotoSession where non_evidence_status = 3"
             onDownload={() => handleDownload('Sessions Fully Processed', metrics.sessionsFullyProcessed)}
             onViewData={() => handleViewData('Sessions Fully Processed')}
