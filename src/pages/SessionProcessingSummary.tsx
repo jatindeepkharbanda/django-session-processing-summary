@@ -172,6 +172,7 @@ const SessionProcessingSummary = () => {
             title="Total Sessions Received"
             value={metrics.totalSessionsReceived}
             isLoading={loading || isRefreshing}
+            definition="PhotoSession table count"
             onDownload={() => handleDownload('Total Sessions Received', metrics.totalSessionsReceived)}
             onViewData={() => handleViewData('Total Sessions Received')}
           />
@@ -180,6 +181,7 @@ const SessionProcessingSummary = () => {
             title="Total Photos Received"
             value={metrics.totalPhotosReceived}
             isLoading={loading || isRefreshing}
+            definition="Photo table count"
             onDownload={() => handleDownload('Total Photos Received', metrics.totalPhotosReceived)}
             onViewData={() => handleViewData('Total Photos Received')}
           />
@@ -188,6 +190,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Confirm Upload Clicked"
             value={metrics.sessionsConfirmUploadClicked}
             isLoading={loading || isRefreshing}
+            definition="PhotoSession where session_state = 2"
             onDownload={() => handleDownload('Sessions Confirm Upload Clicked', metrics.sessionsConfirmUploadClicked)}
             onViewData={() => handleViewData('Sessions Confirm Upload Clicked')}
           />
@@ -196,7 +199,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Not Marked Complete"
             value={metrics.sessionsNotMarkedComplete}
             isLoading={loading || isRefreshing}
-            variant="warning"
+            definition="PhotoSession where session_state ≠ 2"
             onDownload={() => handleDownload('Sessions Not Marked Complete', metrics.sessionsNotMarkedComplete)}
             onViewData={() => handleViewData('Sessions Not Marked Complete')}
           />
@@ -206,6 +209,7 @@ const SessionProcessingSummary = () => {
             value={metrics.sessionsSentForProcessing}
             isLoading={loading || isRefreshing}
             variant="warning"
+            definition="SessionProcessingState count"
             onDownload={() => handleDownload('Sessions Sent For Processing', metrics.sessionsSentForProcessing)}
             onViewData={() => handleViewData('Sessions Sent For Processing')}
           />
@@ -214,7 +218,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Fully Processed"
             value={metrics.sessionsFullyProcessed}
             isLoading={loading || isRefreshing}
-            variant="success"
+            definition="PhotoSession where non_evidence_status = 3"
             onDownload={() => handleDownload('Sessions Fully Processed', metrics.sessionsFullyProcessed)}
             onViewData={() => handleViewData('Sessions Fully Processed')}
           />
@@ -224,6 +228,7 @@ const SessionProcessingSummary = () => {
             value={metrics.sessionsNotProcessed}
             isLoading={loading || isRefreshing}
             variant="error"
+            definition="PhotoSession where non_evidence_status = 1"
             onDownload={() => handleDownload('Sessions Not Processed', metrics.sessionsNotProcessed)}
             onViewData={() => handleViewData('Sessions Not Processed')}
           />
@@ -232,7 +237,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Failed"
             value={metrics.sessionsFailed}
             isLoading={loading || isRefreshing}
-            variant="error"
+            definition="PhotoSession where non_evidence_status = 4"
             onDownload={() => handleDownload('Sessions Failed', metrics.sessionsFailed)}
             onViewData={() => handleViewData('Sessions Failed')}
           />
@@ -241,7 +246,7 @@ const SessionProcessingSummary = () => {
             title="In Processing Sessions"
             value={metrics.inProcessingSessions}
             isLoading={loading || isRefreshing}
-            variant="info"
+            definition="PhotoSession where non_evidence_status = 2"
             onDownload={() => handleDownload('In Processing Sessions', metrics.inProcessingSessions)}
             onViewData={() => handleViewData('In Processing Sessions')}
           />
@@ -250,6 +255,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Available in CAS"
             value={metrics.sessionsAvailableInCAS}
             isLoading={loading || isRefreshing}
+            definition="SessionFacingsDetail count"
             onDownload={() => handleDownload('Sessions Available in CAS', metrics.sessionsAvailableInCAS)}
             onViewData={() => handleViewData('Sessions Available in CAS')}
           />
@@ -259,6 +265,7 @@ const SessionProcessingSummary = () => {
             value={metrics.sessionsAvailableInOutputAPI}
             isLoading={loading || isRefreshing}
             variant="success"
+            definition="SessionIRAnalyticsV2 table count"
             onDownload={() => handleDownload('Sessions Available in Output API', metrics.sessionsAvailableInOutputAPI)}
             onViewData={() => handleViewData('Sessions Available in Output API')}
           />

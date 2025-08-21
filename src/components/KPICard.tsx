@@ -10,6 +10,7 @@ interface KPICardProps {
   value: number;
   isLoading?: boolean;
   variant?: 'default' | 'success' | 'warning' | 'error' | 'info';
+  definition?: string;
   onDownload: () => void;
   onViewData: () => void;
 }
@@ -43,6 +44,7 @@ export const KPICard: React.FC<KPICardProps> = ({
   value,
   isLoading = false,
   variant = 'default',
+  definition,
   onDownload,
   onViewData,
 }) => {
@@ -113,6 +115,15 @@ export const KPICard: React.FC<KPICardProps> = ({
               </Button>
             </div>
           </div>
+          
+          {/* Definition text */}
+          {definition && (
+            <div className="mt-4 pt-3 border-t border-slate-200/40">
+              <p className="text-xs text-slate-500 leading-relaxed">
+                {definition}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Subtle bottom border accent */}
