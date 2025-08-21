@@ -237,6 +237,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Failed"
             value={metrics.sessionsFailed}
             isLoading={loading || isRefreshing}
+            variant="error"
             definition="PhotoSession where non_evidence_status = 4"
             onDownload={() => handleDownload('Sessions Failed', metrics.sessionsFailed)}
             onViewData={() => handleViewData('Sessions Failed')}
