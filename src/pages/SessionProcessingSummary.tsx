@@ -92,23 +92,41 @@ const SessionProcessingSummary = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto max-w-7xl px-8 py-6">
-          <div className="space-y-1">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="text-sm font-medium text-foreground">
-                    Session Processing Summary
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-            <h1 className="text-2xl font-semibold text-foreground">Session Processing Summary</h1>
-            <p className="text-sm text-muted-foreground">
-              Real-time insights into session processing pipeline
-            </p>
+      {/* OneDrive-style Header */}
+      <header className="bg-slate-900 border-b border-slate-800">
+        <div className="mx-auto max-w-7xl px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-blue-600 rounded-sm flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h1 className="text-xl font-semibold text-white">Session Processing Summary</h1>
+                  <p className="text-sm text-slate-300">Real-time insights into session processing pipeline</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-sm text-slate-400 hover:text-slate-200 transition-colors">
+                      Home
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                  <span className="text-slate-500 mx-2">/</span>
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-sm text-slate-200 font-medium">
+                      Reports
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
           </div>
         </div>
       </header>
