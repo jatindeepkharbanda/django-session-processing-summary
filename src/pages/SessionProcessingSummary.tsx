@@ -130,23 +130,12 @@ const SessionProcessingSummary = () => {
                 </div>
                 <div>
                   <h1 className="text-xl font-semibold text-white">Session Processing Summary</h1>
-                  <p className="text-sm text-slate-300">Real-time insights into session processing pipeline</p>
+                  <p className="text-sm text-slate-300">Live session status monitoring</p>
                 </div>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleRefreshData}
-                disabled={isRefreshing}
-                className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white disabled:opacity-50"
-              >
-                <RefreshCw className={cn("h-4 w-4 mr-2", isRefreshing && "animate-spin")} />
-                {isRefreshing ? "Refreshing..." : "Refresh Data"}
-              </Button>
-              
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -169,7 +158,12 @@ const SessionProcessingSummary = () => {
 
       <div className="mx-auto max-w-7xl px-8 py-8 space-y-6">
         {/* Combined Filters */}
-        <CombinedFilterBar filters={filters} onFilterChange={handleFilterChange} />
+        <CombinedFilterBar 
+          filters={filters} 
+          onFilterChange={handleFilterChange}
+          onRefreshData={handleRefreshData}
+          isRefreshing={isRefreshing}
+        />
 
         {/* KPI Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

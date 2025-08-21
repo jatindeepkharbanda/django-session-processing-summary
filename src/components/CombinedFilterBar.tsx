@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-import { CalendarIcon, X, Zap } from 'lucide-react';
+import { CalendarIcon, X, Zap, RefreshCw } from 'lucide-react';
 import { format, addDays, addHours, startOfDay, endOfDay, subDays, subHours, subWeeks, subMonths } from 'date-fns';
 import { cn } from '@/lib/utils';
 import type { DateRange } from 'react-day-picker';
@@ -21,6 +21,8 @@ interface FilterState {
 interface CombinedFilterBarProps {
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
+  onRefreshData?: () => void;
+  isRefreshing?: boolean;
 }
 
 interface DateRangePickerProps {
@@ -99,7 +101,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ label, value, onChang
   );
 };
 
-const CombinedFilterBar: React.FC<CombinedFilterBarProps> = ({ filters, onFilterChange }) => {
+const CombinedFilterBar: React.FC<CombinedFilterBarProps> = ({ filters, onFilterChange, onRefreshData, isRefreshing = false }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<{ label: string; getValue: () => { from: Date; to: Date } } | null>(null);
   const { toast } = useToast();
@@ -341,17 +343,31 @@ const CombinedFilterBar: React.FC<CombinedFilterBarProps> = ({ filters, onFilter
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-sm font-medium text-foreground">Filter Data</h2>
-                {hasActiveFilters && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={clearAllFilters}
-                    className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  >
-                    <X className="mr-1 h-3 w-3" />
-                    Clear All
-                  </Button>
-                )}
+                <div className="flex items-center space-x-2">
+                  {onRefreshData && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={onRefreshData}
+                      disabled={isRefreshing}
+                      className="h-7 px-3 text-xs hover:bg-primary hover:text-primary-foreground disabled:opacity-50"
+                    >
+                      <RefreshCw className={cn("h-3 w-3 mr-1.5", isRefreshing && "animate-spin")} />
+                      {isRefreshing ? "Refreshing..." : "Refresh Data"}
+                    </Button>
+                  )}
+                  {hasActiveFilters && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearAllFilters}
+                      className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <X className="mr-1 h-3 w-3" />
+                      Clear All
+                    </Button>
+                  )}
+                </div>
               </div>
               
               <div className="grid grid-cols-3 gap-3">
