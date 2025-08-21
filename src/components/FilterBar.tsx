@@ -44,19 +44,20 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ label, value, onChang
       <PopoverTrigger asChild>
         <Button
           variant="outline"
+          size="sm"
           className={cn(
-            'justify-start text-left font-normal min-w-[240px]',
+            'w-full justify-start text-left font-normal h-9 px-3 text-xs',
             !hasValue && 'text-muted-foreground'
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <CalendarIcon className="mr-2 h-3 w-3" />
           {hasValue ? (
             <>
-              {value.from ? format(value.from, 'MMM dd, yyyy') : 'Start date'} - {' '}
-              {value.to ? format(value.to, 'MMM dd, yyyy') : 'End date'}
+              {value.from ? format(value.from, 'MMM dd') : 'Start'} - {' '}
+              {value.to ? format(value.to, 'MMM dd, yyyy') : 'End'}
             </>
           ) : (
-            `Select ${label}`
+            'Select range'
           )}
         </Button>
       </PopoverTrigger>
@@ -114,38 +115,56 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange })
     filters.visitTimestamp.from || filters.visitTimestamp.to;
 
   return (
-    <Card>
-      <CardContent className="p-4">
-        <div className="flex flex-col space-y-4 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-4">
-          <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-3">
-            <DateRangePicker
-              label="Modified Date"
-              value={filters.modifiedDate}
-              onChange={(range) => handleFilterUpdate('modifiedDate', range)}
-            />
-            <DateRangePicker
-              label="Created On"
-              value={filters.createdOn}
-              onChange={(range) => handleFilterUpdate('createdOn', range)}
-            />
-            <DateRangePicker
-              label="Visit Timestamp"
-              value={filters.visitTimestamp}
-              onChange={(range) => handleFilterUpdate('visitTimestamp', range)}
-            />
+    <Card className="border-border bg-card">
+      <CardContent className="p-5">
+        <div className="space-y-5">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-medium text-foreground">Filter Data</h2>
+            {hasActiveFilters && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAllFilters}
+                className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              >
+                <X className="mr-1 h-3 w-3" />
+                Clear All
+              </Button>
+            )}
           </div>
           
-          {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <X className="mr-2 h-4 w-4" />
-              Clear All Filters
-            </Button>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Modified Date
+              </label>
+              <DateRangePicker
+                label="Modified Date"
+                value={filters.modifiedDate}
+                onChange={(range) => handleFilterUpdate('modifiedDate', range)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Created On
+              </label>
+              <DateRangePicker
+                label="Created On"
+                value={filters.createdOn}
+                onChange={(range) => handleFilterUpdate('createdOn', range)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Visit Timestamp
+              </label>
+              <DateRangePicker
+                label="Visit Timestamp"
+                value={filters.visitTimestamp}
+                onChange={(range) => handleFilterUpdate('visitTimestamp', range)}
+              />
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>

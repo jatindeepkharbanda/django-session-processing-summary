@@ -93,28 +93,31 @@ const SessionProcessingSummary = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-6 py-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage className="text-lg font-semibold text-foreground">
-                  Session Processing Summary
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <p className="text-sm text-muted-foreground mt-1">
-            Real-time insights into session processing pipeline
-          </p>
+        <div className="mx-auto max-w-7xl px-8 py-6">
+          <div className="space-y-1">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-sm font-medium text-foreground">
+                    Session Processing Summary
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            <h1 className="text-2xl font-semibold text-foreground">Session Processing Summary</h1>
+            <p className="text-sm text-muted-foreground">
+              Real-time insights into session processing pipeline
+            </p>
+          </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-6">
+      <div className="mx-auto max-w-7xl px-8 py-8 space-y-6">
         {/* Filters */}
         <FilterBar filters={filters} onFilterChange={handleFilterChange} />
 
         {/* KPI Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {/* Session Processing Flow */}
           <KPICard
             title="Total Sessions Received"

@@ -15,19 +15,19 @@ interface KPICardProps {
 }
 
 const variantStyles = {
-  default: 'border-border',
-  success: 'border-green-200 bg-green-50/50 dark:border-green-800 dark:bg-green-950/20',
-  warning: 'border-yellow-200 bg-yellow-50/50 dark:border-yellow-800 dark:bg-yellow-950/20',
-  error: 'border-red-200 bg-red-50/50 dark:border-red-800 dark:bg-red-950/20',
-  info: 'border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/20',
+  default: 'border-border hover:border-primary/20 hover:shadow-sm',
+  success: 'border-border hover:border-green-200 hover:shadow-sm',
+  warning: 'border-border hover:border-orange-200 hover:shadow-sm',
+  error: 'border-border hover:border-red-200 hover:shadow-sm',
+  info: 'border-border hover:border-blue-200 hover:shadow-sm',
 };
 
 const valueStyles = {
   default: 'text-foreground',
-  success: 'text-green-700 dark:text-green-400',
-  warning: 'text-yellow-700 dark:text-yellow-400',
-  error: 'text-red-700 dark:text-red-400',
-  info: 'text-blue-700 dark:text-blue-400',
+  success: 'text-green-600',
+  warning: 'text-orange-600',
+  error: 'text-red-600',
+  info: 'text-blue-600',
 };
 
 export const KPICard: React.FC<KPICardProps> = ({
@@ -44,46 +44,46 @@ export const KPICard: React.FC<KPICardProps> = ({
 
   return (
     <Card className={cn(
-      'relative transition-all duration-200 hover:shadow-md hover:shadow-primary/5 group',
+      'relative transition-all duration-300 bg-card border group hover:shadow-md',
       variantStyles[variant]
     )}>
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between">
-          <h3 className="text-sm font-medium text-muted-foreground leading-tight pr-2">
-            {title}
-          </h3>
-          <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-6 w-6 text-muted-foreground hover:text-foreground"
-              onClick={onViewData}
-            >
-              <Eye className="h-3 w-3" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-6 w-6 text-muted-foreground hover:text-foreground"
-              onClick={onDownload}
-            >
-              <Download className="h-3 w-3" />
-            </Button>
+      <CardContent className="p-5">
+        <div className="space-y-4">
+          <div className="flex items-start justify-between">
+            <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide leading-tight pr-2">
+              {title}
+            </h3>
+            <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-muted-foreground hover:text-foreground hover:bg-muted"
+                onClick={onViewData}
+              >
+                <Eye className="h-3 w-3" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-muted-foreground hover:text-foreground hover:bg-muted"
+                onClick={onDownload}
+              >
+                <Download className="h-3 w-3" />
+              </Button>
+            </div>
           </div>
+          
+          {isLoading ? (
+            <Skeleton className="h-7 w-16" />
+          ) : (
+            <div className={cn(
+              'text-xl font-semibold tabular-nums',
+              valueStyles[variant]
+            )}>
+              {formatValue(value)}
+            </div>
+          )}
         </div>
-      </CardHeader>
-      
-      <CardContent className="pt-0">
-        {isLoading ? (
-          <Skeleton className="h-8 w-24" />
-        ) : (
-          <div className={cn(
-            'text-2xl font-bold tabular-nums',
-            valueStyles[variant]
-          )}>
-            {formatValue(value)}
-          </div>
-        )}
       </CardContent>
     </Card>
   );
