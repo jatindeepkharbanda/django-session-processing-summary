@@ -87,8 +87,8 @@ export const KPICard: React.FC<KPICardProps> = ({
               )}
             </div>
 
-            {/* Action buttons that appear on hover */}
-            <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+            {/* Action buttons - always visible */}
+            <div className="flex items-center space-x-2 transition-all duration-300">
               <Button
                 variant="ghost"
                 size="icon"

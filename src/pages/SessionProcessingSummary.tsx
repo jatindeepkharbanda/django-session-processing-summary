@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { KPICard } from '@/components/KPICard';
 import CombinedFilterBar from '@/components/CombinedFilterBar';
+import { Button } from '@/components/ui/button';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbPage } from '@/components/ui/breadcrumb';
 import { Toaster } from '@/components/ui/toaster';
+import { RefreshCw } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 interface SessionMetrics {
   totalSessionsReceived: number;
@@ -51,6 +55,8 @@ const SessionProcessingSummary = () => {
     visitTimestamp: {},
   });
   const [loading, setLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { toast } = useToast();
 
   // Simulate real-time updates
   useEffect(() => {
@@ -64,10 +70,29 @@ const SessionProcessingSummary = () => {
   const handleFilterChange = (newFilters: FilterState) => {
     setFilters(newFilters);
     setLoading(true);
-    // Simulate API call
+    // Simulate API call and auto-refresh when filters change
     setTimeout(() => {
       setMetrics(generateMockData());
       setLoading(false);
+      toast({
+        title: "Data Refreshed",
+        description: "KPI data has been updated based on the applied filters.",
+        duration: 2000,
+      });
+    }, 1000);
+  };
+
+  const handleRefreshData = () => {
+    setIsRefreshing(true);
+    // Simulate API call for manual refresh
+    setTimeout(() => {
+      setMetrics(generateMockData());
+      setIsRefreshing(false);
+      toast({
+        title: "Data Refreshed",
+        description: "All KPI data has been updated with the latest information.",
+        duration: 2000,
+      });
     }, 1000);
   };
 
@@ -111,6 +136,17 @@ const SessionProcessingSummary = () => {
             </div>
             
             <div className="flex items-center space-x-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleRefreshData}
+                disabled={isRefreshing}
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white disabled:opacity-50"
+              >
+                <RefreshCw className={cn("h-4 w-4 mr-2", isRefreshing && "animate-spin")} />
+                {isRefreshing ? "Refreshing..." : "Refresh Data"}
+              </Button>
+              
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -141,7 +177,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Total Sessions Received"
             value={metrics.totalSessionsReceived}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Total Sessions Received', metrics.totalSessionsReceived)}
             onViewData={() => handleViewData('Total Sessions Received')}
           />
@@ -149,7 +185,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Total Photos Received"
             value={metrics.totalPhotosReceived}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Total Photos Received', metrics.totalPhotosReceived)}
             onViewData={() => handleViewData('Total Photos Received')}
           />
@@ -157,7 +193,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Confirm Upload Clicked"
             value={metrics.sessionsConfirmUploadClicked}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Sessions Confirm Upload Clicked', metrics.sessionsConfirmUploadClicked)}
             onViewData={() => handleViewData('Sessions Confirm Upload Clicked')}
           />
@@ -165,7 +201,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Not Marked Complete"
             value={metrics.sessionsNotMarkedComplete}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             variant="warning"
             onDownload={() => handleDownload('Sessions Not Marked Complete', metrics.sessionsNotMarkedComplete)}
             onViewData={() => handleViewData('Sessions Not Marked Complete')}
@@ -174,7 +210,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Sent For Processing"
             value={metrics.sessionsSentForProcessing}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Sessions Sent For Processing', metrics.sessionsSentForProcessing)}
             onViewData={() => handleViewData('Sessions Sent For Processing')}
           />
@@ -182,7 +218,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Fully Processed"
             value={metrics.sessionsFullyProcessed}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             variant="success"
             onDownload={() => handleDownload('Sessions Fully Processed', metrics.sessionsFullyProcessed)}
             onViewData={() => handleViewData('Sessions Fully Processed')}
@@ -191,7 +227,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Not Processed"
             value={metrics.sessionsNotProcessed}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             variant="warning"
             onDownload={() => handleDownload('Sessions Not Processed', metrics.sessionsNotProcessed)}
             onViewData={() => handleViewData('Sessions Not Processed')}
@@ -200,7 +236,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Failed"
             value={metrics.sessionsFailed}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             variant="error"
             onDownload={() => handleDownload('Sessions Failed', metrics.sessionsFailed)}
             onViewData={() => handleViewData('Sessions Failed')}
@@ -209,7 +245,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="In Processing Sessions"
             value={metrics.inProcessingSessions}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             variant="info"
             onDownload={() => handleDownload('In Processing Sessions', metrics.inProcessingSessions)}
             onViewData={() => handleViewData('In Processing Sessions')}
@@ -218,7 +254,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Available in CAS"
             value={metrics.sessionsAvailableInCAS}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Sessions Available in CAS', metrics.sessionsAvailableInCAS)}
             onViewData={() => handleViewData('Sessions Available in CAS')}
           />
@@ -226,7 +262,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Sessions Available in Output API"
             value={metrics.sessionsAvailableInOutputAPI}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Sessions Available in Output API', metrics.sessionsAvailableInOutputAPI)}
             onViewData={() => handleViewData('Sessions Available in Output API')}
           />
@@ -234,7 +270,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Unique Stores Visited"
             value={metrics.uniqueStoresVisited}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Unique Stores Visited', metrics.uniqueStoresVisited)}
             onViewData={() => handleViewData('Unique Stores Visited')}
           />
@@ -242,7 +278,7 @@ const SessionProcessingSummary = () => {
           <KPICard
             title="Unique Users Visited"
             value={metrics.uniqueUsersVisited}
-            isLoading={loading}
+            isLoading={loading || isRefreshing}
             onDownload={() => handleDownload('Unique Users Visited', metrics.uniqueUsersVisited)}
             onViewData={() => handleViewData('Unique Users Visited')}
           />
