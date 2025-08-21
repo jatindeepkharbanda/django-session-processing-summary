@@ -7,6 +7,7 @@ import { CalendarIcon, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import type { DateRange } from 'react-day-picker';
+import { useToast } from '@/hooks/use-toast';
 
 interface FilterState {
   modifiedDate: { from?: Date; to?: Date };
@@ -90,15 +91,49 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ label, value, onChang
 };
 
 export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange }) => {
+  const { toast } = useToast();
+  
   const handleFilterUpdate = (
     filterType: keyof FilterState,
     range: { from?: Date; to?: Date }
   ) => {
+    // Check which filters are currently active and will be removed
+    const removedFilters = [];
+    
+    if (filterType !== 'visitTimestamp' && (filters.visitTimestamp.from || filters.visitTimestamp.to)) {
+      removedFilters.push('Visit Timestamp');
+    }
+    if (filterType !== 'createdOn' && (filters.createdOn.from || filters.createdOn.to)) {
+      removedFilters.push('Created On');
+    }
+    if (filterType !== 'modifiedDate' && (filters.modifiedDate.from || filters.modifiedDate.to)) {
+      removedFilters.push('Modified Date');
+    }
+    
+    // Clear all filters and apply only the selected one
     const newFilters = {
-      ...filters,
-      [filterType]: range,
+      visitTimestamp: {},
+      createdOn: {},
+      modifiedDate: {},
+      [filterType]: range
     };
+    
     onFilterChange(newFilters);
+    
+    // Show toast for removed filters if any were active and a new range is being set
+    if (removedFilters.length > 0 && (range.from || range.to)) {
+      const filterDisplayNames = {
+        visitTimestamp: 'Visit Timestamp',
+        createdOn: 'Created On',
+        modifiedDate: 'Modified Date'
+      };
+      
+      toast({
+        title: "Filter Replaced",
+        description: `Removed ${removedFilters.join(', ')} filter${removedFilters.length > 1 ? 's' : ''} and applied new ${filterDisplayNames[filterType]} filter.`,
+        duration: 3000,
+      });
+    }
   };
 
   const clearAllFilters = () => {

@@ -3,6 +3,7 @@ import { KPICard } from '@/components/KPICard';
 import { FilterBar } from '@/components/FilterBar';
 import QuickDatePresets from '@/components/QuickDatePresets';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbPage } from '@/components/ui/breadcrumb';
+import { Toaster } from '@/components/ui/toaster';
 
 interface SessionMetrics {
   totalSessionsReceived: number;
@@ -233,6 +234,7 @@ const SessionProcessingSummary = () => {
           />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

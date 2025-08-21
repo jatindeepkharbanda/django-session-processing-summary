@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { X, Zap } from 'lucide-react';
 import { addDays, addHours, startOfDay, endOfDay, subDays, subHours, subWeeks, subMonths, format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
 
 interface FilterState {
   modifiedDate: { from?: Date; to?: Date };
@@ -20,6 +21,7 @@ interface QuickDatePresetsProps {
 const QuickDatePresets: React.FC<QuickDatePresetsProps> = ({ filters, onFilterChange }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<{ label: string; getValue: () => { from: Date; to: Date } } | null>(null);
+  const { toast } = useToast();
   
   const now = new Date();
 
@@ -91,13 +93,60 @@ const QuickDatePresets: React.FC<QuickDatePresetsProps> = ({ filters, onFilterCh
     if (!selectedPreset) return;
     
     const dateRange = selectedPreset.getValue();
-    onFilterChange({
-      ...filters,
+    
+    // Check which filters are currently active and will be removed
+    const removedFilters = [];
+    
+    if (filterType !== 'visitTimestamp' && (filters.visitTimestamp.from || filters.visitTimestamp.to)) {
+      removedFilters.push('Visit Timestamp');
+    }
+    if (filterType !== 'createdOn' && (filters.createdOn.from || filters.createdOn.to)) {
+      removedFilters.push('Created On');
+    }
+    if (filterType !== 'modifiedDate' && (filters.modifiedDate.from || filters.modifiedDate.to)) {
+      removedFilters.push('Modified Date');
+    }
+    
+    // Clear all filters and apply only the selected one
+    const newFilters = {
+      visitTimestamp: {},
+      createdOn: {},
+      modifiedDate: {},
       [filterType]: dateRange
-    });
+    };
+    
+    onFilterChange(newFilters);
+    
+    // Show toast for removed filters
+    if (removedFilters.length > 0) {
+      toast({
+        title: "Filter Replaced",
+        description: `Removed ${removedFilters.join(', ')} filter${removedFilters.length > 1 ? 's' : ''} and applied ${selectedPreset.label} to ${getFilterDisplayName(filterType)}.`,
+        duration: 3000,
+      });
+    } else {
+      toast({
+        title: "Filter Applied",
+        description: `Applied ${selectedPreset.label} to ${getFilterDisplayName(filterType)}.`,
+        duration: 3000,
+      });
+    }
     
     setIsDialogOpen(false);
     setSelectedPreset(null);
+  };
+
+  const getFilterDisplayName = (filterType: keyof FilterState) => {
+    switch (filterType) {
+      case 'visitTimestamp':
+        return 'Visit Timestamp';
+      case 'createdOn':
+        return 'Created On';
+      case 'modifiedDate':
+        return 'Modified Date';
+      default:
+        return '';
+    }
   };
 
   const clearAllFilters = () => {
