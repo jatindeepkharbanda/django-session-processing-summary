@@ -208,7 +208,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Sent For Processing"
             value={metrics.sessionsSentForProcessing}
             isLoading={loading || isRefreshing}
-            variant="warning"
+            variant={metrics.sessionsSentForProcessing > 0 ? "warning" : "default"}
             definition="SessionProcessingState count"
             onDownload={() => handleDownload('Sessions Sent For Processing', metrics.sessionsSentForProcessing)}
             onViewData={() => handleViewData('Sessions Sent For Processing')}
@@ -227,7 +227,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Not Processed"
             value={metrics.sessionsNotProcessed}
             isLoading={loading || isRefreshing}
-            variant="error"
+            variant={metrics.sessionsNotProcessed > 0 ? "error" : "default"}
             definition="PhotoSession where non_evidence_status = 1"
             onDownload={() => handleDownload('Sessions Not Processed', metrics.sessionsNotProcessed)}
             onViewData={() => handleViewData('Sessions Not Processed')}
@@ -237,7 +237,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Failed"
             value={metrics.sessionsFailed}
             isLoading={loading || isRefreshing}
-            variant="error"
+            variant={metrics.sessionsFailed > 0 ? "error" : "default"}
             definition="PhotoSession where non_evidence_status = 4"
             onDownload={() => handleDownload('Sessions Failed', metrics.sessionsFailed)}
             onViewData={() => handleViewData('Sessions Failed')}
@@ -247,7 +247,7 @@ const SessionProcessingSummary = () => {
             title="In Processing Sessions"
             value={metrics.inProcessingSessions}
             isLoading={loading || isRefreshing}
-            variant="warning"
+            variant={metrics.inProcessingSessions > 0 ? "warning" : "default"}
             definition="PhotoSession where non_evidence_status = 2"
             onDownload={() => handleDownload('In Processing Sessions', metrics.inProcessingSessions)}
             onViewData={() => handleViewData('In Processing Sessions')}
@@ -266,7 +266,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Available in Output API"
             value={metrics.sessionsAvailableInOutputAPI}
             isLoading={loading || isRefreshing}
-            variant="success"
+            variant={metrics.sessionsAvailableInOutputAPI > 0 ? "success" : "default"}
             definition="SessionIRAnalyticsV2 table count"
             onDownload={() => handleDownload('Sessions Available in Output API', metrics.sessionsAvailableInOutputAPI)}
             onViewData={() => handleViewData('Sessions Available in Output API')}
@@ -276,7 +276,7 @@ const SessionProcessingSummary = () => {
             title="Unique Stores Visited"
             value={metrics.uniqueStoresVisited}
             isLoading={loading || isRefreshing}
-            variant="info"
+            variant={metrics.uniqueStoresVisited > 0 ? "info" : "default"}
             onDownload={() => handleDownload('Unique Stores Visited', metrics.uniqueStoresVisited)}
             onViewData={() => handleViewData('Unique Stores Visited')}
           />
@@ -285,7 +285,7 @@ const SessionProcessingSummary = () => {
             title="Unique Users Visited"
             value={metrics.uniqueUsersVisited}
             isLoading={loading || isRefreshing}
-            variant="info"
+            variant={metrics.uniqueUsersVisited > 0 ? "info" : "default"}
             onDownload={() => handleDownload('Unique Users Visited', metrics.uniqueUsersVisited)}
             onViewData={() => handleViewData('Unique Users Visited')}
           />
