@@ -205,6 +205,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Sent For Processing"
             value={metrics.sessionsSentForProcessing}
             isLoading={loading || isRefreshing}
+            variant="warning"
             onDownload={() => handleDownload('Sessions Sent For Processing', metrics.sessionsSentForProcessing)}
             onViewData={() => handleViewData('Sessions Sent For Processing')}
           />
@@ -222,7 +223,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Not Processed"
             value={metrics.sessionsNotProcessed}
             isLoading={loading || isRefreshing}
-            variant="warning"
+            variant="error"
             onDownload={() => handleDownload('Sessions Not Processed', metrics.sessionsNotProcessed)}
             onViewData={() => handleViewData('Sessions Not Processed')}
           />
@@ -257,6 +258,7 @@ const SessionProcessingSummary = () => {
             title="Sessions Available in Output API"
             value={metrics.sessionsAvailableInOutputAPI}
             isLoading={loading || isRefreshing}
+            variant="success"
             onDownload={() => handleDownload('Sessions Available in Output API', metrics.sessionsAvailableInOutputAPI)}
             onViewData={() => handleViewData('Sessions Available in Output API')}
           />
