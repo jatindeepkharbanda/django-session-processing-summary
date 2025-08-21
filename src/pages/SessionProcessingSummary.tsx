@@ -246,6 +246,7 @@ const SessionProcessingSummary = () => {
             title="In Processing Sessions"
             value={metrics.inProcessingSessions}
             isLoading={loading || isRefreshing}
+            variant="warning"
             definition="PhotoSession where non_evidence_status = 2"
             onDownload={() => handleDownload('In Processing Sessions', metrics.inProcessingSessions)}
             onViewData={() => handleViewData('In Processing Sessions')}
@@ -274,6 +275,7 @@ const SessionProcessingSummary = () => {
             title="Unique Stores Visited"
             value={metrics.uniqueStoresVisited}
             isLoading={loading || isRefreshing}
+            variant="info"
             onDownload={() => handleDownload('Unique Stores Visited', metrics.uniqueStoresVisited)}
             onViewData={() => handleViewData('Unique Stores Visited')}
           />
@@ -282,6 +284,7 @@ const SessionProcessingSummary = () => {
             title="Unique Users Visited"
             value={metrics.uniqueUsersVisited}
             isLoading={loading || isRefreshing}
+            variant="info"
             onDownload={() => handleDownload('Unique Users Visited', metrics.uniqueUsersVisited)}
             onViewData={() => handleViewData('Unique Users Visited')}
           />
